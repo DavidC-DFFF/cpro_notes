@@ -96,11 +96,12 @@ button:active {
   user-select: none;
 }
 
-.c1 { background: #166534; color: #fff; }   /* vert foncé */
-.c2 { background: #86efac; color: #0f172a; } /* vert clair */
-.c3 { background: #fb923c; color: #0f172a; } /* orange */
-.c4 { background: #ef4444; color: #fff; }    /* rouge */
-.c5 { background: #3b82f6; color: #fff; }    /* bleu */
+.c1 { background: rgb(100, 143, 28); color: #fff; }      /* vert foncé */
+.c2 { background: rgb(194, 226, 139); color: #1f2937; }  /* vert clair */
+.c3 { background: rgb(255, 165, 0); color: #1f2937; }    /* orange */
+.c4 { background: rgb(197, 0, 0); color: #fff; }         /* rouge */
+.c5 { background: rgb(0, 142, 208); color: #fff; }       /* bleu */
+
 
 .bottom {
   margin-top: 14px;
