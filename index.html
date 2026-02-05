@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur de note</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <button id="themeBtn" aria-label="Basculer clair sombre">🌙 / ☀️</button>
+    </div>
+
+    <section class="rows" id="rows">
+      <div class="row" data-index="0">
+        <button class="minus" aria-label="Diminuer ligne 1">−</button>
+        <div class="value c1">0</div>
+        <button class="plus" aria-label="Augmenter ligne 1">+</button>
+      </div>
+      <div class="row" data-index="1">
+        <button class="minus" aria-label="Diminuer ligne 2">−</button>
+        <div class="value c2">0</div>
+        <button class="plus" aria-label="Augmenter ligne 2">+</button>
+      </div>
+      <div class="row" data-index="2">
+        <button class="minus" aria-label="Diminuer ligne 3">−</button>
+        <div class="value c3">0</div>
+        <button class="plus" aria-label="Augmenter ligne 3">+</button>
+      </div>
+      <div class="row" data-index="3">
+        <button class="minus" aria-label="Diminuer ligne 4">−</button>
+        <div class="value c4">0</div>
+        <button class="plus" aria-label="Augmenter ligne 4">+</button>
+      </div>
+      <div class="row" data-index="4">
+        <button class="minus" aria-label="Diminuer ligne 5">−</button>
+        <div class="value c5">0</div>
+        <button class="plus" aria-label="Augmenter ligne 5">+</button>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <div id="score" class="score">Note : 0,0 / 20</div>
+      <button id="resetBtn">Réinitialiser</button>
+    </section>
+
+    <p class="hint">Le bleu est ignoré dans le calcul.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

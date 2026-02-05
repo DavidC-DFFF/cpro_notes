@@ -1,0 +1,148 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --btn: #f3f4f6;
+  --btn-hover: #e5e7eb;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+body.dark {
+  --bg: #111827;
+  --card: #1f2937;
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --border: #374151;
+  --btn: #374151;
+  --btn-hover: #4b5563;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.app {
+  width: min(720px, 100%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.rows {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 10px;
+  align-items: center;
+}
+
+button {
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--text);
+  border-radius: 10px;
+  height: 48px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.04s ease;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background: var(--btn-hover);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.value {
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  user-select: none;
+}
+
+.c1 { background: #166534; color: #fff; }   /* vert foncé */
+.c2 { background: #86efac; color: #0f172a; } /* vert clair */
+.c3 { background: #fb923c; color: #0f172a; } /* orange */
+.c4 { background: #ef4444; color: #fff; }    /* rouge */
+.c5 { background: #3b82f6; color: #fff; }    /* bleu */
+
+.bottom {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.score {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.15rem;
+  background: rgba(127, 127, 127, 0.08);
+  text-align: center;
+  padding: 0 8px;
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .row {
+    grid-template-columns: 52px 1fr 52px;
+  }
+
+  button,
+  .value,
+  .score {
+    height: 46px;
+  }
+
+  .score {
+    font-size: 1.05rem;
+  }
+}
