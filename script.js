@@ -13,8 +13,9 @@ function updateUI() {
   rows.forEach((row, i) => {
     row.querySelector(".value").textContent = values[i];
   });
-  updateScore();
-  updateAverageColor();
+
+  const score = updateScore();
+  updateAverageColorFromScore(score);
 }
 
 function updateScore() {
@@ -37,33 +38,29 @@ function updateScore() {
   });
 
   scoreEl.textContent = `Note : ${formatted} / 20`;
+  return score;
 }
 
-function updateAverageColor() {
-  const dgreen = values[0];
-  const lgreen = values[1];
-  const orange = values[2];
-  const red = values[3];
-  const total = dgreen + lgreen + orange + red; // sans bleu
-
+function updateAverageColorFromScore(score) {
   colorResultEl.className = "color-result";
 
+  // Si aucune donnée (hors bleu), affichage neutre
+  const total = values[0] + values[1] + values[2] + values[3];
   if (total === 0) {
     colorResultEl.classList.add("neutral");
     colorResultEl.textContent = "Couleur : —";
     return;
   }
 
-  // Échelle couleur : rouge=0, orange=1, vert clair=2, vert foncé=3
-  const mean = (red * 0 + orange * 1 + lgreen * 2 + dgreen * 3) / total;
-
-  if (mean < 0.5) {
+  // Couleur basée sur la note /20
+  // Rouge: [0,5[, Orange: [5,10[, Vert clair: [10,15[, Vert foncé: [15,20]
+  if (score < 5) {
     colorResultEl.classList.add("red");
     colorResultEl.textContent = "Couleur : Rouge";
-  } else if (mean < 1.5) {
+  } else if (score < 10) {
     colorResultEl.classList.add("orange");
     colorResultEl.textContent = "Couleur : Orange";
-  } else if (mean < 2.5) {
+  } else if (score < 15) {
     colorResultEl.classList.add("lgreen");
     colorResultEl.textContent = "Couleur : Vert clair";
   } else {
@@ -89,9 +86,11 @@ resetBtn.addEventListener("click", () => {
   updateUI();
 });
 
-// Thème clair/sombre
+// Thème clair/sombre (mémorisé)
 const savedTheme = localStorage.getItem("theme");
-if (savedTheme === "dark") document.body.classList.add("dark");
+if (savedTheme === "dark") {
+  document.body.classList.add("dark");
+}
 
 themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
