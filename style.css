@@ -45,31 +45,8 @@ body {
 
 .topbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
   margin-bottom: 12px;
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  border: 1px solid var(--border);
-  background: var(--btn);
-  color: var(--text);
-  border-radius: 10px;
-  height: 40px;
-  padding: 0 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.tab.active {
-  outline: 2px solid rgba(59, 130, 246, 0.5);
 }
 
 #themeBtn {
@@ -81,9 +58,6 @@ body {
   padding: 0 12px;
   cursor: pointer;
 }
-
-.panel { display: none; }
-.panel.active { display: block; }
 
 .rows {
   display: grid;
@@ -121,7 +95,7 @@ button:hover { background: var(--btn-hover); }
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Couleurs demandées d'après ton visuel */
+/* Palette selon ton visuel */
 .c1 { background: rgb(100, 143, 28); color: #fff; }      /* vert foncé */
 .c2 { background: rgb(194, 226, 139); color: #1f2937; }  /* vert clair */
 .c3 { background: rgb(255, 165, 0); color: #1f2937; }    /* orange */
@@ -131,8 +105,9 @@ button:hover { background: var(--btn-hover); }
 .bottom {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 1fr auto;
   gap: 10px;
+  align-items: stretch;
 }
 
 .score, .color-result {
@@ -143,12 +118,11 @@ button:hover { background: var(--btn-hover); }
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1.05rem;
   padding: 0 10px;
   text-align: center;
 }
 
-.color-result.neutral { background: rgba(127, 127, 127, 0.08); color: var(--text); }
+.color-result.neutral { background: rgba(127,127,127,0.12); color: var(--text); }
 .color-result.red     { background: rgb(197, 0, 0); color: #fff; }
 .color-result.orange  { background: rgb(255, 165, 0); color: #1f2937; }
 .color-result.lgreen  { background: rgb(194, 226, 139); color: #1f2937; }
@@ -159,6 +133,15 @@ button:hover { background: var(--btn-hover); }
   font-size: 0.9rem;
   color: var(--muted);
   text-align: center;
+}
+
+@media (max-width: 620px) {
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+  .reset {
+    width: 100%;
+  }
 }
 
 @media (max-width: 520px) {

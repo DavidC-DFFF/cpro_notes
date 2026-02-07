@@ -1,52 +1,32 @@
-// Deux jeux de compteurs indépendants
-const noteValues = [0, 0, 0, 0, 0];   // [vert foncé, vert clair, orange, rouge, bleu]
-const colorValues = [0, 0, 0, 0, 0];  // idem
+const values = [0, 0, 0, 0, 0]; // [vert foncé, vert clair, orange, rouge, bleu]
 
-const rowsNote = document.querySelectorAll("#rowsNote .row");
-const rowsColor = document.querySelectorAll("#rowsColor .row");
-
+const rows = document.querySelectorAll("#rows .row");
 const scoreEl = document.getElementById("score");
 const colorResultEl = document.getElementById("colorResult");
-
-const resetNoteBtn = document.getElementById("resetNoteBtn");
-const resetColorBtn = document.getElementById("resetColorBtn");
-
+const resetBtn = document.getElementById("resetBtn");
 const themeBtn = document.getElementById("themeBtn");
-const tabs = document.querySelectorAll(".tab");
-const panels = document.querySelectorAll(".panel");
 
-// ====== Onglets ======
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => {
-      t.classList.remove("active");
-      t.setAttribute("aria-selected", "false");
-    });
-    panels.forEach(p => p.classList.remove("active"));
-
-    tab.classList.add("active");
-    tab.setAttribute("aria-selected", "true");
-    document.getElementById(tab.dataset.tab).classList.add("active");
-  });
-});
-
-// ====== Note /20 ======
+// Note /20 : vert foncé=1, vert clair=2/3, orange=1/3, rouge=0, bleu ignoré
 const noteWeights = [1, 2 / 3, 1 / 3, 0, 0];
 
-function updateNoteUI() {
-  rowsNote.forEach((row, i) => {
-    row.querySelector(".value").textContent = noteValues[i];
+function updateUI() {
+  rows.forEach((row, i) => {
+    row.querySelector(".value").textContent = values[i];
   });
+  updateScore();
+  updateAverageColor();
+}
 
-  const total = noteValues[0] + noteValues[1] + noteValues[2] + noteValues[3]; // sans bleu
+function updateScore() {
+  const total = values[0] + values[1] + values[2] + values[3]; // sans bleu
   let score = 0;
 
   if (total > 0) {
     const weighted =
-      noteValues[0] * noteWeights[0] +
-      noteValues[1] * noteWeights[1] +
-      noteValues[2] * noteWeights[2] +
-      noteValues[3] * noteWeights[3];
+      values[0] * noteWeights[0] +
+      values[1] * noteWeights[1] +
+      values[2] * noteWeights[2] +
+      values[3] * noteWeights[3];
 
     score = (weighted / total) * 20;
   }
@@ -59,36 +39,12 @@ function updateNoteUI() {
   scoreEl.textContent = `Note : ${formatted} / 20`;
 }
 
-rowsNote.forEach((row, i) => {
-  row.querySelector(".plus").addEventListener("click", () => {
-    noteValues[i]++;
-    updateNoteUI();
-  });
-
-  row.querySelector(".minus").addEventListener("click", () => {
-    noteValues[i] = Math.max(0, noteValues[i] - 1);
-    updateNoteUI();
-  });
-});
-
-resetNoteBtn.addEventListener("click", () => {
-  for (let i = 0; i < noteValues.length; i++) noteValues[i] = 0;
-  updateNoteUI();
-});
-
-// ====== Couleur de sortie ======
-// Échelle : rouge=0, orange=1, vert clair=2, vert foncé=3
-// bleu ignoré
-function updateColorUI() {
-  rowsColor.forEach((row, i) => {
-    row.querySelector(".value").textContent = colorValues[i];
-  });
-
-  const dgreen = colorValues[0];
-  const lgreen = colorValues[1];
-  const orange = colorValues[2];
-  const red = colorValues[3];
-  const total = dgreen + lgreen + orange + red;
+function updateAverageColor() {
+  const dgreen = values[0];
+  const lgreen = values[1];
+  const orange = values[2];
+  const red = values[3];
+  const total = dgreen + lgreen + orange + red; // sans bleu
 
   colorResultEl.className = "color-result";
 
@@ -98,48 +54,42 @@ function updateColorUI() {
     return;
   }
 
-  const mean =
-    (red * 0 + orange * 1 + lgreen * 2 + dgreen * 3) / total;
-
-  let label = "";
-  let cls = "";
+  // Échelle couleur : rouge=0, orange=1, vert clair=2, vert foncé=3
+  const mean = (red * 0 + orange * 1 + lgreen * 2 + dgreen * 3) / total;
 
   if (mean < 0.5) {
-    label = "Rouge";
-    cls = "red";
+    colorResultEl.classList.add("red");
+    colorResultEl.textContent = "Couleur : Rouge";
   } else if (mean < 1.5) {
-    label = "Orange";
-    cls = "orange";
+    colorResultEl.classList.add("orange");
+    colorResultEl.textContent = "Couleur : Orange";
   } else if (mean < 2.5) {
-    label = "Vert clair";
-    cls = "lgreen";
+    colorResultEl.classList.add("lgreen");
+    colorResultEl.textContent = "Couleur : Vert clair";
   } else {
-    label = "Vert foncé";
-    cls = "dgreen";
+    colorResultEl.classList.add("dgreen");
+    colorResultEl.textContent = "Couleur : Vert foncé";
   }
-
-  colorResultEl.classList.add(cls);
-  colorResultEl.textContent = `Couleur : ${label}`;
 }
 
-rowsColor.forEach((row, i) => {
+rows.forEach((row, i) => {
   row.querySelector(".plus").addEventListener("click", () => {
-    colorValues[i]++;
-    updateColorUI();
+    values[i]++;
+    updateUI();
   });
 
   row.querySelector(".minus").addEventListener("click", () => {
-    colorValues[i] = Math.max(0, colorValues[i] - 1);
-    updateColorUI();
+    values[i] = Math.max(0, values[i] - 1);
+    updateUI();
   });
 });
 
-resetColorBtn.addEventListener("click", () => {
-  for (let i = 0; i < colorValues.length; i++) colorValues[i] = 0;
-  updateColorUI();
+resetBtn.addEventListener("click", () => {
+  for (let i = 0; i < values.length; i++) values[i] = 0;
+  updateUI();
 });
 
-// ====== Thème ======
+// Thème clair/sombre
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "dark") document.body.classList.add("dark");
 
@@ -151,6 +101,4 @@ themeBtn.addEventListener("click", () => {
   );
 });
 
-// Init
-updateNoteUI();
-updateColorUI();
+updateUI();

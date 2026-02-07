@@ -3,96 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculateur note / couleur</title>
+  <title>Calculateur note + couleur</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="app">
     <div class="topbar">
-      <div class="tabs" role="tablist" aria-label="Onglets">
-        <button class="tab active" data-tab="noteTab" role="tab" aria-selected="true">Note /20</button>
-        <button class="tab" data-tab="colorTab" role="tab" aria-selected="false">Couleur</button>
-      </div>
       <button id="themeBtn" aria-label="Basculer clair sombre">🌙 / ☀️</button>
     </div>
 
-    <!-- Onglet NOTE -->
-    <section id="noteTab" class="panel active" role="tabpanel">
-      <section class="rows" id="rowsNote">
-        <div class="row" data-index="0">
-          <button class="minus">−</button>
-          <div class="value c1">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="1">
-          <button class="minus">−</button>
-          <div class="value c2">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="2">
-          <button class="minus">−</button>
-          <div class="value c3">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="3">
-          <button class="minus">−</button>
-          <div class="value c4">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="4">
-          <button class="minus">−</button>
-          <div class="value c5">0</div>
-          <button class="plus">+</button>
-        </div>
-      </section>
-
-      <section class="bottom">
-        <div id="score" class="score">Note : 0,0 / 20</div>
-        <button id="resetNoteBtn">Réinitialiser</button>
-      </section>
-      <p class="hint">Le bleu est ignoré dans le calcul.</p>
+    <section class="rows" id="rows">
+      <div class="row" data-index="0">
+        <button class="minus" aria-label="Diminuer vert foncé">−</button>
+        <div class="value c1">0</div>
+        <button class="plus" aria-label="Augmenter vert foncé">+</button>
+      </div>
+      <div class="row" data-index="1">
+        <button class="minus" aria-label="Diminuer vert clair">−</button>
+        <div class="value c2">0</div>
+        <button class="plus" aria-label="Augmenter vert clair">+</button>
+      </div>
+      <div class="row" data-index="2">
+        <button class="minus" aria-label="Diminuer orange">−</button>
+        <div class="value c3">0</div>
+        <button class="plus" aria-label="Augmenter orange">+</button>
+      </div>
+      <div class="row" data-index="3">
+        <button class="minus" aria-label="Diminuer rouge">−</button>
+        <div class="value c4">0</div>
+        <button class="plus" aria-label="Augmenter rouge">+</button>
+      </div>
+      <div class="row" data-index="4">
+        <button class="minus" aria-label="Diminuer bleu">−</button>
+        <div class="value c5">0</div>
+        <button class="plus" aria-label="Augmenter bleu">+</button>
+      </div>
     </section>
 
-    <!-- Onglet COULEUR -->
-    <section id="colorTab" class="panel" role="tabpanel">
-      <section class="rows" id="rowsColor">
-        <div class="row" data-index="0">
-          <button class="minus">−</button>
-          <div class="value c1">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="1">
-          <button class="minus">−</button>
-          <div class="value c2">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="2">
-          <button class="minus">−</button>
-          <div class="value c3">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="3">
-          <button class="minus">−</button>
-          <div class="value c4">0</div>
-          <button class="plus">+</button>
-        </div>
-        <div class="row" data-index="4">
-          <button class="minus">−</button>
-          <div class="value c5">0</div>
-          <button class="plus">+</button>
-        </div>
-      </section>
-
-      <section class="bottom">
-        <div id="colorResult" class="color-result neutral">
-          Couleur : — 
-        </div>
-        <button id="resetColorBtn">Réinitialiser</button>
-      </section>
-      <p class="hint">
-        Règle : on prend la moyenne pondérée (rouge=0, orange=1, vert clair=2, vert foncé=3), puis on convertit en couleur.
-      </p>
+    <section class="bottom">
+      <div id="score" class="score">Note : 0,0 / 20</div>
+      <div id="colorResult" class="color-result neutral">Couleur : —</div>
+      <button id="resetBtn" class="reset">Réinitialiser</button>
     </section>
+
+    <p class="hint">Le bleu est ignoré dans le calcul de la note et de la couleur moyenne.</p>
   </main>
 
   <script src="script.js"></script>
