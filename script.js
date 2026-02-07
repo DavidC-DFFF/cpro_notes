@@ -14,8 +14,8 @@ function updateUI() {
     row.querySelector(".value").textContent = values[i];
   });
 
-  const score = updateScore();
-  updateAverageColorFromScore(score);
+  updateScore();
+  updateColorByAxisAverage();
 }
 
 function updateScore() {
@@ -38,29 +38,53 @@ function updateScore() {
   });
 
   scoreEl.textContent = `Note : ${formatted} / 20`;
-  return score;
 }
 
-function updateAverageColorFromScore(score) {
+/**
+ * Couleur par position moyenne sur l'axe :
+ * R=0, O=1, VC=2, VF=3 (bleu ignoré)
+ * - Cas x.5 => arrondi au supérieur
+ * - Sinon arrondi au plus proche
+ */
+function updateColorByAxisAverage() {
+  const VF = values[0];
+  const VC = values[1];
+  const O = values[2];
+  const R = values[3];
+
+  const total = VF + VC + O + R;
+
   colorResultEl.className = "color-result";
 
-  // Si aucune donnée (hors bleu), affichage neutre
-  const total = values[0] + values[1] + values[2] + values[3];
   if (total === 0) {
     colorResultEl.classList.add("neutral");
     colorResultEl.textContent = "Couleur : —";
     return;
   }
 
-  // Couleur basée sur la note /20
-  // Rouge: [0,5[, Orange: [5,10[, Vert clair: [10,15[, Vert foncé: [15,20]
-  if (score < 5) {
+  // moyenne des niveaux (R=0, O=1, VC=2, VF=3)
+  const mean = (3 * VF + 2 * VC + 1 * O + 0 * R) / total;
+
+  // gestion précise du "pile entre 2" => couleur supérieure
+  const EPS = 1e-9;
+  let level;
+  if (Math.abs(mean * 2 - Math.round(mean * 2)) < EPS && Math.round(mean * 2) % 2 === 1) {
+    // mean est de la forme n + 0.5
+    level = Math.ceil(mean);
+  } else {
+    level = Math.round(mean);
+  }
+
+  // sécurité bornes
+  level = Math.max(0, Math.min(3, level));
+
+  if (level === 0) {
     colorResultEl.classList.add("red");
     colorResultEl.textContent = "Couleur : Rouge";
-  } else if (score < 10) {
+  } else if (level === 1) {
     colorResultEl.classList.add("orange");
     colorResultEl.textContent = "Couleur : Orange";
-  } else if (score < 15) {
+  } else if (level === 2) {
     colorResultEl.classList.add("lgreen");
     colorResultEl.textContent = "Couleur : Vert clair";
   } else {
