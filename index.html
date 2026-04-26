@@ -9,44 +9,79 @@
 <body>
   <main class="app">
     <div class="topbar">
-      <button id="themeBtn" aria-label="Basculer clair sombre">🌙 / ☀️</button>
+      <button id="themeBtn" class="theme-switch" type="button" aria-label="Basculer jour nuit" aria-pressed="false">
+        <span class="theme-switch-track">
+          <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+          <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+          <span class="theme-switch-thumb" aria-hidden="true"></span>
+        </span>
+      </button>
     </div>
 
-    <section class="rows" id="rows">
-      <div class="row" data-index="0">
-        <button class="minus" aria-label="Diminuer vert foncé">−</button>
-        <div class="value c1">0</div>
-        <button class="plus" aria-label="Augmenter vert foncé">+</button>
-      </div>
-      <div class="row" data-index="1">
-        <button class="minus" aria-label="Diminuer vert clair">−</button>
-        <div class="value c2">0</div>
-        <button class="plus" aria-label="Augmenter vert clair">+</button>
-      </div>
-      <div class="row" data-index="2">
-        <button class="minus" aria-label="Diminuer orange">−</button>
-        <div class="value c3">0</div>
-        <button class="plus" aria-label="Augmenter orange">+</button>
-      </div>
-      <div class="row" data-index="3">
-        <button class="minus" aria-label="Diminuer rouge">−</button>
-        <div class="value c4">0</div>
-        <button class="plus" aria-label="Augmenter rouge">+</button>
-      </div>
-      <div class="row" data-index="4">
-        <button class="minus" aria-label="Diminuer bleu">−</button>
-        <div class="value c5">0</div>
-        <button class="plus" aria-label="Augmenter bleu">+</button>
-      </div>
+    <nav class="tabs" aria-label="Sections de calcul">
+      <button class="tab is-active" data-tab-target="tonote" type="button">tonote</button>
+      <button class="tab" data-tab-target="fromnote" type="button">fromnote</button>
+    </nav>
+
+    <section class="panel is-active" id="tonote">
+      <section class="rows" id="rows">
+        <div class="row" data-index="0">
+          <button class="minus" aria-label="Diminuer vert fonce" type="button">-</button>
+          <div class="value c1">0</div>
+          <button class="plus" aria-label="Augmenter vert fonce" type="button">+</button>
+        </div>
+        <div class="row" data-index="1">
+          <button class="minus" aria-label="Diminuer vert clair" type="button">-</button>
+          <div class="value c2">0</div>
+          <button class="plus" aria-label="Augmenter vert clair" type="button">+</button>
+        </div>
+        <div class="row" data-index="2">
+          <button class="minus" aria-label="Diminuer orange" type="button">-</button>
+          <div class="value c3">0</div>
+          <button class="plus" aria-label="Augmenter orange" type="button">+</button>
+        </div>
+        <div class="row" data-index="3">
+          <button class="minus" aria-label="Diminuer rouge" type="button">-</button>
+          <div class="value c4">0</div>
+          <button class="plus" aria-label="Augmenter rouge" type="button">+</button>
+        </div>
+        <div class="row" data-index="4">
+          <button class="minus" aria-label="Diminuer bleu" type="button">-</button>
+          <div class="value c5">0</div>
+          <button class="plus" aria-label="Augmenter bleu" type="button">+</button>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div id="score" class="score">Note : 0,0 / 20</div>
+        <div id="colorResult" class="color-result neutral">Couleur : -</div>
+        <button id="resetBtn" class="reset" type="button">Reinitialiser</button>
+      </section>
+
+      <p class="hint">Le bleu est ignore dans le calcul de la note et de la couleur moyenne.</p>
     </section>
 
-    <section class="bottom">
-      <div id="score" class="score">Note : 0,0 / 20</div>
-      <div id="colorResult" class="color-result neutral">Couleur : —</div>
-      <button id="resetBtn" class="reset">Réinitialiser</button>
-    </section>
+    <section class="panel" id="fromnote">
+      <div class="fromnote-grid">
+        <label class="field">
+          <span>Note visee (/20)</span>
+          <input id="targetNote" type="number" min="0" max="20" step="0.1" value="8.5" />
+        </label>
+        <label class="field">
+          <span>Nombre de competences</span>
+          <input id="skillCount" type="number" min="1" step="1" value="4" />
+        </label>
+      </div>
 
-    <p class="hint">Le bleu est ignoré dans le calcul de la note et de la couleur moyenne.</p>
+      <section class="fromnote-result">
+        <div id="proposalScore" class="score">Note proposee : 0,0 / 20</div>
+        <div id="proposalGap" class="color-result neutral">Ecart : 0,0</div>
+      </section>
+
+      <div id="proposalSummary" class="summary">Aucune proposition pour le moment.</div>
+      <div id="proposalList" class="proposal-list" aria-live="polite"></div>
+      <p class="hint">Quand une note exacte est impossible, l'application retient la repartition la plus proche.</p>
+    </section>
   </main>
 
   <script src="script.js"></script>
